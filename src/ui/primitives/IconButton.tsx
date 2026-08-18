@@ -1,0 +1,135 @@
+import React from "react";
+
+import {
+  Pressable,
+  PressableProps,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
+
+import { useTheme } from "../../theme";
+
+export type IconButtonVariant =
+  | "default"
+  | "soft"
+  | "ghost"
+  | "overlay";
+
+export type IconButtonSize =
+  | "sm"
+  | "md"
+  | "lg";
+
+interface IconButtonProps
+  extends Omit<PressableProps, "style"> {
+  icon: React.ReactNode;
+  variant?: IconButtonVariant;
+  size?: IconButtonSize;
+  style?: StyleProp<ViewStyle>;
+  accessibilityLabel: string;
+}
+
+export function IconButton({
+  icon,
+
+  variant = "default",
+  size = "md",
+
+  disabled,
+
+  style,
+
+  accessibilityLabel,
+
+  ...props
+}: IconButtonProps) {
+
+  const theme = useTheme();
+
+  const sizes: Record<
+    IconButtonSize,
+    number
+  > = {
+    sm: 36,
+
+    md:
+      theme.components.iconButton.size,
+
+    lg: 52,
+  };
+
+  const backgrounds: Record<
+    IconButtonVariant,
+    string
+  > = {
+
+    default:
+      theme.colors.surface,
+
+    soft:
+      theme.colors.primarySoft,
+
+    ghost:
+      "transparent",
+
+    overlay:
+      theme.colors.overlay,
+  };
+
+  const buttonSize =
+    sizes[size];
+
+  return (
+    <Pressable
+      {...props}
+
+      disabled={disabled}
+
+      accessibilityRole="button"
+
+      accessibilityLabel={
+        accessibilityLabel
+      }
+
+      accessibilityState={{
+        disabled,
+      }}
+
+      hitSlop={8}
+
+      style={({ pressed }) => [
+
+        {
+          width: buttonSize,
+          height: buttonSize,
+
+          borderRadius:
+            theme.radius.pill,
+
+          backgroundColor:
+            backgrounds[variant],
+
+          justifyContent:
+            "center",
+
+          alignItems:
+            "center",
+
+          opacity:
+            disabled
+              ? 0.4
+              : pressed
+                ? 0.7
+                : 1,
+        },
+
+        variant === "default" &&
+          theme.shadows.sm,
+
+        style,
+      ]}
+    >
+      {icon}
+    </Pressable>
+  );
+}
