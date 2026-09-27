@@ -14,6 +14,7 @@ module.exports = ({ config }) => ({
     apiBaseUrl:
       process.env.EXPO_PUBLIC_API_BASE_URL ??
       config.extra?.apiBaseUrl ??
+      // Empty = runtime resolves LAN host + :8000/api in src/config/env.js
       "",
   },
 });

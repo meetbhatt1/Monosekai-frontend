@@ -13,10 +13,10 @@ export const apiClient = axios.create({
   timeout: 20000,
   headers: {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   },
   // TODO(backend-contract): Enable withCredentials if the API uses cookie sessions.
-  withCredentials: false
+  withCredentials: false,
 });
 
 session.setApiBaseUrl(env.apiBaseUrl);

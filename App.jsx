@@ -28,22 +28,7 @@ import PremiumScreen from "./src/screens/premium/PremiumScreen";
  * Account:     profile | settings | premium
  * Dev:         foundation
  */
-const PREVIEW =
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"player";
+const PREVIEW = "player";
 
 const SCREENS = {
   foundation: FoundationTest,
@@ -60,7 +45,7 @@ const SCREENS = {
   downloads: DownloadsScreen,
   profile: ProfileScreen,
   settings: SettingsScreen,
-  premium: PremiumScreen
+  premium: PremiumScreen,
 };
 
 export default function App() {
@@ -71,6 +56,6 @@ export default function App() {
       <ThemeProvider>
         <Screen />
       </ThemeProvider>
-    </SafeAreaProvider>);
-
+    </SafeAreaProvider>
+  );
 }

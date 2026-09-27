@@ -16,10 +16,7 @@ import { ThemeCharacter } from "../../ui/components/auth/ThemeCharacter";
 import { theme, useResponsive } from "../../theme";
 import { hp } from "../../theme/responsive";
 import SocialButtons from "../../ui/components/auth/SocialButtons";
-import {
-  loginSchema } from
-
-"../../validators/auth/login.schema";
+import { loginSchema } from "../../validators/auth/login.schema";
 import { useLoginMutation } from "../../auth";
 import { normalizeApiError } from "../../utils/api-error";
 
@@ -31,13 +28,13 @@ export default function LoginScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
 
   const onSubmit = handleSubmit(async (values) => {
@@ -45,13 +42,13 @@ export default function LoginScreen() {
       await loginMutation.mutateAsync(values);
       // Redirect is handled centrally in src/auth after the session is stored.
     } catch {
-
       // Error rendered below from mutation state.
-    }});
+    }
+  });
 
-  const apiError = loginMutation.error ?
-  normalizeApiError(loginMutation.error) :
-  null;
+  const apiError = loginMutation.error
+    ? normalizeApiError(loginMutation.error)
+    : null;
 
   return (
     <Screen>
@@ -62,9 +59,9 @@ export default function LoginScreen() {
           top: hp(height, 2),
           right: horizontalPadding,
           width: 96,
-          height: 96
-        }} />
-      
+          height: 96,
+        }}
+      />
 
       <Stack
         flex={1}
@@ -73,17 +70,17 @@ export default function LoginScreen() {
           paddingHorizontal: horizontalPadding,
           flexWrap: "nowrap",
           paddingTop: hp(height, 10),
-          paddingBottom: hp(height, 4)
-        }}>
-        
+          paddingBottom: hp(height, 4),
+        }}
+      >
         <Stack gap="xl">
           <Stack gap="xs">
             <AppText variant="h1">Welcome back!</AppText>
             <AppText
               variant="body"
               tone="secondary"
-              style={{ marginBottom: 12 }}>
-              
+              style={{ marginBottom: 12 }}
+            >
               Login to continue your journey.
             </AppText>
           </Stack>
@@ -91,73 +88,75 @@ export default function LoginScreen() {
           <Controller
             control={control}
             name="email"
-            render={({ field: { onChange, onBlur, value } }) =>
-            <AppTextField
-              label="Email"
-              boldLabel
-              placeholder="you@example.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              containerStyle={{ marginVertical: 8, width: width * 0.9 }} />
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AppTextField
+                label="Email"
+                boldLabel
+                placeholder="you@example.com"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                containerStyle={{ marginVertical: 8, width: width * 0.9 }}
+              />
+            )}
+          />
 
-            } />
-          
-          {errors.email ?
-          <AppText tone="error" variant="caption">
-              {errors.email.message}
-            </AppText> :
-          null}
-          {apiError?.fieldErrors.email ?
-          <AppText tone="error" variant="caption">
+          {errors.email ? (
+            <AppText tone="error" variant="caption">
+              {errors.email}
+            </AppText>
+          ) : null}
+          {apiError?.fieldErrors.email ? (
+            <AppText tone="error" variant="caption">
               {apiError.fieldErrors.email}
-            </AppText> :
-          null}
+            </AppText>
+          ) : null}
 
           <Controller
             control={control}
             name="password"
-            render={({ field: { onChange, onBlur, value } }) =>
-            <AppPasswordField
-              label="Password"
-              boldLabel
-              placeholder="••••••••"
-              value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              containerStyle={{ marginVertical: 8, width: width * 0.9 }} />
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AppPasswordField
+                label="Password"
+                boldLabel
+                placeholder="••••••••"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                containerStyle={{ marginVertical: 8, width: width * 0.9 }}
+              />
+            )}
+          />
 
-            } />
-          
-          {errors.password ?
-          <AppText tone="error" variant="caption">
+          {errors.password ? (
+            <AppText tone="error" variant="caption">
               {errors.password.message}
-            </AppText> :
-          null}
-          {apiError?.fieldErrors.password ?
-          <AppText tone="error" variant="caption">
+            </AppText>
+          ) : null}
+          {apiError?.fieldErrors.password ? (
+            <AppText tone="error" variant="caption">
               {apiError.fieldErrors.password}
-            </AppText> :
-          null}
+            </AppText>
+          ) : null}
 
           <AppText
             variant="label"
             tone="primary"
             style={{ color: theme.colors.primary, fontWeight: "700" }}
             align="right"
-            onPress={() => router.push("/(auth)/forgot-password")}>
-            
+            onPress={() => router.push("/(auth)/forgot-password")}
+          >
             Forgot Password?
           </AppText>
 
-          {apiError?.message && !apiError.fieldErrors.email && !apiError.fieldErrors.password ?
-          <AppText tone="error" variant="caption">
-              {apiError.message}
-            </AppText> :
-          null}
+          {apiError?.message &&
+          !apiError.fieldErrors.email &&
+          !apiError.fieldErrors.password
+            ? console.log("------", apiError.raw)
+            : null}
 
           <AppButton
             variant="primary"
@@ -170,9 +169,9 @@ export default function LoginScreen() {
               borderRadius: theme.radius.md,
               borderWidth: 1,
               borderColor: theme.colors.border,
-              marginVertical: 8
-            }} />
-          
+              marginVertical: 8,
+            }}
+          />
 
           <Divider text="or continue with" />
 
@@ -192,14 +191,14 @@ export default function LoginScreen() {
             style={{
               color: theme.colors.primary,
               textDecorationStyle: "solid",
-              textDecorationLine: "underline"
+              textDecorationLine: "underline",
             }}
-            onPress={() => router.push("/(auth)/signup")}>
-            
+            onPress={() => router.push("/(auth)/signup")}
+          >
             Sign Up
           </AppText>
         </Stack>
       </Stack>
-    </Screen>);
-
+    </Screen>
+  );
 }
